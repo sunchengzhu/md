@@ -1,7 +1,5 @@
 > 通过分析hardhat在部署合约、调用合约函数过程中用到的rpc方法、方法参数、方法返回值的作用和意义，了解部署合约、调用合约函数的整个详细流程。
 
-&nbsp;​​ 
-
 通过hardhat部署合约、调用合约函数的简单实现：[learnHardhat](https://github.com/sunchengzhu/learnHardhat)
 
 ## hardhat如何与以太坊网络交互？
