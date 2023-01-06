@@ -85,7 +85,7 @@ ethers.js处于安全考虑，[每次使用provider都会调用eth_chainId](http
 
 7. eth_getTransactionByHash
 
-   根据eth_sendRawTransactio返回的交易hash查询交易在链上的执行情况，如果返回结果为null（比如交易还还没打到链上）则会一直查，直到查到为止，查到之后就开始查回执。返回结果中的v r s为交易的签名数据。
+   根据eth_sendRawTransactio返回的交易hash查询交易在链上的执行情况，如果返回结果为null（比如交易还没进入交易池）则会一直查，直到查到为止，查到之后就开始查回执。返回结果中的v r s为交易的签名数据。
 
 8. eth_getTransactionReceipt
 
