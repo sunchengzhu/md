@@ -18,10 +18,6 @@ hardhat包本身没有打印JSON-RPC日志的功能，所以我们需要给hardh
 
 详见：[补丁代码](https://github.com/sunchengzhu/learnHardhat/blob/main/patches/hardhat%2B2.12.2.patch)、[npm包打补丁教程](https://juejin.cn/post/6962554654643191815)
 
-- 设置hardhat记录每个请求
-
-hardhat.config.js中设置`loggingEnabled: true`
-
 ### 编译合约
 
 编译合约得到artifacts/contracts/Learn.sol/Learn.json，其中包含合约字节码`bytecode` 和`abi` json。合约字节码是solidity合约被编译成的可被EVM执行的16进制字符。ABI是合约接口的说明，定义与合约进行交互数据编码规则。
@@ -47,7 +43,7 @@ await contract.deployed();
 
 ### 相应的rpc日志
 
-排除掉eth_chainId的rpc日志：[deploy.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/deploy.log) &nbsp;&nbsp;&nbsp;&nbsp; 原始的rpc日志：[original-deploy.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/original-deploy.log)
+排除掉eth_chainId的rpc日志：[deploy.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/deploy.log) &nbsp;&nbsp;&nbsp;&nbsp; 原始的rpc日志：[original-deploy.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/original-deploy.log)
 
 ethers.js处于安全考虑，[每次使用provider都会调用eth_chainId](https://github.com/ethers-io/ethers.js/issues/901)，而ethers.js访问区块链数据的API都需要通过provider，如getBlockNumber、getGasPrice，所以在rpc日志中会看到大量的eth_chainId调用，下面给出的rpc日志排除掉了eth_chainId接口，方便我们理解。
 
@@ -163,7 +159,7 @@ expect(value).to.be.equal(randomNum);
 
 ### 相应的rpc日志
 
-[setValue.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/setValue.log)
+[setValue.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/setValue.log)
 
 ### 日志解读
 
