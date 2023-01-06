@@ -47,7 +47,7 @@ await contract.deployed();
 
 ### 相应的rpc日志
 
-排除掉eth_chainId的rpc日志：[deploy.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/deploy.log) &nbsp;&nbsp;&nbsp;&nbsp; 原始的rpc日志：[original-deploy.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/original-deploy.log)
+排除掉eth_chainId的rpc日志：[deploy.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/deploy.log) &nbsp;&nbsp;&nbsp;&nbsp; 原始的rpc日志：[original-deploy.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/original-deploy.log)
 
 ethers.js处于安全考虑，[每次使用provider都会调用eth_chainId](https://github.com/ethers-io/ethers.js/issues/901)，而ethers.js访问区块链数据的API都需要通过provider，如getBlockNumber、getGasPrice，所以在rpc日志中会看到大量的eth_chainId调用，下面给出的rpc日志排除掉了eth_chainId接口，方便我们理解。
 
@@ -163,7 +163,7 @@ expect(value).to.be.equal(randomNum);
 
 ### 相应的rpc日志
 
-[setValue.log](https://zhu-1304641378.cos.ap-shanghai.myqcloud.com/log/setValue.log)
+[setValue.log](https://docs-1304641378.cos.ap-shanghai.myqcloud.com/hardhat-rpc/setValue.log)
 
 ### 日志解读
 
