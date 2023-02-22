@@ -111,5 +111,5 @@ yarn run simpleAccount erc20Transfer --token 0x61a89342F52d9F31626B56b64A83579E5
 
 ## 原生支持gasless交易的链推荐
 
-如果开发者有为用户代付gas费的需求话**强烈推荐使用[godwoken团队的gasless feature](https://docs.godwoken.io/gasless-feature)**，可以直接处理UserOperation而不需要搭建bundler，UserOperation也能[在区块链浏览器直观展示](https://v1.testnet.gwscan.com/tx/0xc2e2c0141231ae0d544956ef977d8ca328d44134c431c57f71dcb47f71a86fcd)。
+如果开发者有为用户代付gas费的需求的话**强烈推荐使用[godwoken团队的gasless feature](https://docs.godwoken.io/gasless-feature)**，可以直接处理UserOperation而不需要搭建bundler，UserOperation也能[在区块链浏览器直观展示](https://v1.testnet.gwscan.com/tx/0xc2e2c0141231ae0d544956ef977d8ca328d44134c431c57f71dcb47f71a86fcd)。
 
