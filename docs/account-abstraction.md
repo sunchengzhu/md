@@ -107,7 +107,7 @@ yarn run simpleAccount erc20Transfer --token 0x61a89342F52d9F31626B56b64A83579E5
 1. [例子中的eth转账交易](https://goerli.etherscan.io/tx/0xc01b3537400468763f01e32357c6792f55366643cb099db94e731a872e3cfe2a)中from账户为ERC4337_BUNDLER_PRIVATE_KEY对应的[bundler账户](https://goerli.etherscan.io/address/0xf6286e20f6bdc4bdcff7cb5a8a397bda017fcb84)，to为EntryPoint合约，执行的函数是handleOps，0.026864612848902924 ETH从sender转到EntryPoint，EntryPoint转给目标地址0.001 ETH（命令行传入的值），0.015580453241024552 ETH从EntryPoint补给bundler账户（因为这笔交易花掉的gas费扣到了bundler账户身上）。
 
 2. [例子中的erc20转账交易](https://goerli.etherscan.io/tx/0x4071ac2224535a45c6923e422ace694f84778eb50dbc88d1e592a74c84b576c9)中与eth转账交易类似，只不过EntryPoint发起的不再是eth转账而是erc20转账。
-3. [例子中的用了paymaster的erc20转账](https://goerli.etherscan.io/tx/0xb7fa4ba386dbd79e7d567f6b027d9ddda204dcedee06b8c490fddec6b50b33ce)中只有EntryPoint补给bundler账户gas费这一笔互动，因为只需要扣paymaster存在EntryPoint里面的eth即可。
+3. [例子中的用了paymaster的erc20转账交易](https://goerli.etherscan.io/tx/0xb7fa4ba386dbd79e7d567f6b027d9ddda204dcedee06b8c490fddec6b50b33ce)中只有EntryPoint补给bundler账户gas费这一笔互动，因为只需要扣paymaster存在EntryPoint里面的eth即可。
 
 ## 原生支持gasless交易的链推荐
 
