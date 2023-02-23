@@ -90,7 +90,7 @@ yarn run simpleAccount erc20Transfer --token <address> --to <address> --amount <
 ```bash
 yarn run simpleAccount erc20Transfer --token 0x61a89342F52d9F31626B56b64A83579E5c368f4c --to 0x413978328AA912d3fc63929d356d353F6e854Ee1 --amount 0.1
 ```
-### 使用Paymaster
+### 使用paymaster
 
 附加 `--withPaymaster`即可
 
