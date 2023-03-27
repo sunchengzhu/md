@@ -32,7 +32,7 @@ hardhat包本身没有打印JSON-RPC日志的功能，所以我们需要给hardh
 
 ### hardhat代码
 
-```jsx
+```javascript
 //根据合约名称，创建合约工厂类实例
 const Learn = await ethers.getContractFactory("Learn");
 //部署合约
@@ -91,7 +91,7 @@ ethers.js处于安全考虑，[每次使用provider都会调用eth_chainId](http
 
 ### hardhat代码
 
-```jsx
+```javascript
 //attach从已经部署的合约和现有实例（重用相同的ABI和Signer）创建一个新的合约实例
 learn = await Learn.attach(learnAddress);
 //add是pure函数
@@ -146,7 +146,7 @@ jsonRpcResponse: {
 
 ### hardhat代码
 
-```jsx
+```javascript
 const randomNum = Math.floor(Math.random() * 1000000);
 //修改合约里的一个状态变量
 const tx = await learn.setValue(randomNum);
@@ -169,7 +169,7 @@ expect(value).to.be.equal(randomNum);
 
 ### hardhat代码
 
-```jsx
+```javascript
 const randomNum = Math.floor(Math.random() * 1000000);
 //通过callStatic指定使用eth_call调用
 const result = await learn.callStatic.setValue(randomNum);
