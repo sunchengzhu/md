@@ -16,7 +16,7 @@ hardhat包本身没有打印JSON-RPC日志的功能，所以我们需要给hardh
 
 - 打印请求、返回、签名前的交易体
 
-详见：[补丁代码](https://github.com/sunchengzhu/learnHardhat/blob/main/patches/hardhat%2B2.12.7.patch)、[npm包打补丁教程](https://juejin.cn/post/6962554654643191815)
+详见：[补丁代码](https://github.com/sunchengzhu/learnHardhat/blob/main/patches/hardhat%2B2.13.0.patch)、[npm包打补丁教程](https://juejin.cn/post/6962554654643191815)
 
 ### 编译合约
 
