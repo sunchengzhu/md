@@ -63,7 +63,7 @@ ethers.js处于安全考虑，[每次使用provider都会调用eth_chainId](http
 
    根据结果中有无baseFeePerGas判断是否支持eip1559，如果存在baseFeePerGas，则会调用eth_feeHistory，用于计算出交易体所需的maxFeePerGas和maxPriorityFeePerGas。
 
-   hardhat调用eth_feeHistory的逻辑存在[问题](https://github.com/NomicFoundation/hardhat/issues/3395)，所以暂时还看不到eth_feeHistory的日志。eth_feeHistory调用失败之后会使用非eip1559节点的逻辑，即构造交易体不使用maxFeePerGas和maxPriorityFeePerGas参数。<u>[问题](https://github.com/NomicFoundation/hardhat/issues/3395)已被修复，所以支持eip1559的节点，如hardhat本地节点、goerli会使用eth_feeHistory，而不是eth_gasPrice。</u>
+   hardhat调用eth_feeHistory的逻辑存在[问题](https://github.com/NomicFoundation/hardhat/issues/3395)，所以暂时还看不到eth_feeHistory的日志。eth_feeHistory调用失败之后会使用非eip1559节点的逻辑，即构造交易体不使用maxFeePerGas和maxPriorityFeePerGas参数。**该问题目前已被修复，所以支持eip1559的节点，如hardhat本地节点、goerli会使用eth_feeHistory，而不是eth_gasPrice。**
 
    *相关源码：node_modules/hardhat/src/internal/core/providers/gas-providers.ts*
 
