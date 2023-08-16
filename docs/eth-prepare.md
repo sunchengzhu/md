@@ -90,7 +90,7 @@
 
 2. 保存合约地址和`data`，后面压测要用
 
-   ```json
+   ```
    simpleStorage address: 0xf8771203a271026CE38e239Ed06fb4c1EB59d9cE
    tx data: 0x20965255
    ```
