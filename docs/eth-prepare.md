@@ -3,6 +3,9 @@
 ## 项目简介
 
 项目地址：https://github.com/sunchengzhu/eth-prepare
+
+相关文章：[以太坊兼容链性能测试2—性能数据统计](https://github.com/sunchengzhu/md/blob/main/docs/eth-performance.md)、[以太坊兼容链性能测试3—开展测试](https://github.com/sunchengzhu/md/blob/main/docs/eth-jmeter.md)
+
 ### 功能
 
 1. 快速给同一助记词生成的大量账户充值，保证后续转账、调用合约函数等发送交易的测试场景需要发起账户有足够的资金
@@ -94,7 +97,7 @@
 2. 保存合约地址和`data`，后面压测要用
 
    ```
-   simpleStorage address: 0xf8771203a271026CE38e239Ed06fb4c1EB59d9cE
+   simpleStorage address: 0x6Fc1E7631D24b6173d975a892ba5563E8C04CB9f
    tx data: 0x20965255
    ```
 
@@ -104,12 +107,12 @@
    curl https://rpc.testnet.fantom.network \
      -X POST \
      -H "Content-Type: application/json" \
-     -d '{"jsonrpc":"2.0","method":"eth_call","params":[{"from":"0x045346bE7C2915F96c9261BEE90d3FF9005a6c2b","to":"0xf8771203a271026CE38e239Ed06fb4c1EB59d9cE","data":"0x20965255"}, "latest"],"id":1}'
+     -d '{"jsonrpc":"2.0","method":"eth_call","params":[{"from":"0x045346bE7C2915F96c9261BEE90d3FF9005a6c2b","to":"0x6Fc1E7631D24b6173d975a892ba5563E8C04CB9f","data":"0x20965255"}, "latest"],"id":1}'
    ```
 
 ### uniswap
 
-看[etherscan gastracker](https://etherscan.io/gastracker)上的排名，现在在公链上最多的场景还是token转换。所以这里我们也部署uniswap V2合约进行压测，我们选取`swapExactETHForTokens`函数进行压测，用账户的资金换token，这样比较简单，因为我们对每个账户已经进行了充值都有资金，只需要一开始给这个token增加流动性即可。如果要压测`swapExactTokensForETH`函数的话，每个账户都需要充值该token以及执行`approve`授权uniswap路由合约操作token。
+看[etherscan gastracker](https://etherscan.io/gastracker)上的排名，现在在公链上最多的场景还是token转换。所以这里我们也部署uniswap V2合约进行压测，我们选取`swapExactETHForTokens`函数进行压测，用账户的资金（1000wei）换token，这样比较简单，因为我们对每个账户已经进行了充值都有资金，只需要一开始给这个token增加流动性即可。如果要压测`swapExactTokensForETH`函数的话，每个账户都需要充值该token以及执行`approve`授权uniswap路由合约操作token。
 
 1. 部署合约并执行`swapExactTokensForETH`一次获取`data`
 
@@ -120,8 +123,18 @@
 2. 保存uniswap路由合约地址和data，后面压测要用
 
    ```
-   uniAddress: '0x2221128E1b10fAe438C1378DeD86cc7332b65B6c'
-   data: 0x7ff36ab500000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000045346be7c2915f96c9261bee90d3ff9005a6c2b00000000000000000000000000000000000000000000000000005af3107a3fff0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000e96cef6c929a12c9b664af8dfb5f58dd2810be43000000000000000000000000940847378cc75bcd4c692d7e0e9ed5dafd4245a1
+   uniAddress: '0x7C7087d81c5f4Bd7EA30A5e13095414395DfD4F1'
+   data: 0x7ff36ab50000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000008000000000000000000000000079026e949ba3ef5c854186244d1597a369bc326d00000000000000000000000000000000000000000000000000005af3107a3fff0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000a6465996d9b1c6e82a65d4503d07ee1f68ed3a34000000000000000000000000a37614c751f37cbc54c5223254e8695024fa36c7
    ```
 
    
+
+### 已核验合约
+
+[simpleStorage](https://testnet.ftmscan.com/address/0x6fc1e7631d24b6173d975a892ba5563e8c04cb9f#code)
+
+[UniswapV2Router02](https://testnet.ftmscan.com/address/0x7C7087d81c5f4Bd7EA30A5e13095414395DfD4F1#code)
+
+[ERC20](https://testnet.ftmscan.com/token/0xA37614c751F37cBc54C5223254e8695024fA36c7#code)
+
+[WETH9](https://testnet.ftmscan.com/address/0xa6465996d9b1c6e82a65d4503d07ee1f68ed3a34#code)

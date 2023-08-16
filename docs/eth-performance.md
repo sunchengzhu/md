@@ -4,6 +4,8 @@
 
 项目地址：https://github.com/sunchengzhu/eth-performance
 
+相关文章：[以太坊兼容链性能测试1—准备工作](https://github.com/sunchengzhu/md/blob/main/docs/eth-prepare.md)、[以太坊兼容链性能测试3—开展测试](https://github.com/sunchengzhu/md/blob/main/docs/eth-jmeter.md)
+
 ### 功能
 
 1. 压测过程中实时统计区块交易数、出块间隔、tps等数据

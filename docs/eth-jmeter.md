@@ -9,11 +9,11 @@
 ### 功能
 
 1. 使用jmeter开展rpc接口的压测，包含`eth_getBalance`、`eth_getBlockByNumber`、`eth_call`、`eth_sendRawTransaction`，其他接口有需要可以根据现有的代码改造。
-1. 根据助记词生成指定数量的账户循环发送交易和查询余额，主要用[jmeter的Concurrency Thread Group插件](https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/)控制测试时间和线程数。
+1. 根据助记词生成指定数量的账户循环发送交易和查询余额，用[jmeter的Concurrency Thread Group插件](https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/)控制测试时间和线程数。
 
 ### 设计
 
-主要通过两个workflow开展压测，[query.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/query.yml)是非交易接口`eth_getBalance`、`eth_getBlockByNumber`、`eth_call`的压测，而[tx.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/tx.yml)则是原生转账和uniswap `swapExactTokensForETH`交易接口`eth_sendRawTransaction`两个场景的压测。tx.yml会多一步触发[eth_performace的ethStats.yml](https://github.com/sunchengzhu/eth-performance/blob/main/.github/workflows/ethStats.yml)，统计交易性能数据。query.yml的接口是实时返回的，可以直接在客户端这边统计性能数据，我设置了[5s秒打印一次summary](https://github.com/sunchengzhu/eth-jmeter/blob/af87f984ddc3b43f3b70e1978731a2af9f959573/pom.xml#L68)，summary数据格式如下：
+通过两个workflow开展压测，[query.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/query.yml)是非交易接口`eth_getBalance`、`eth_getBlockByNumber`、`eth_call`的压测，而[tx.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/tx.yml)则是原生转账和uniswap `swapExactTokensForETH`交易接口`eth_sendRawTransaction`两个场景的压测。tx.yml会多一步触发[eth_performace的ethStats.yml](https://github.com/sunchengzhu/eth-performance/blob/main/.github/workflows/ethStats.yml)，统计交易性能数据。query.yml的接口是实时返回的，可以直接在客户端这边统计性能数据，我设置了[5s秒打印一次summary](https://github.com/sunchengzhu/eth-jmeter/blob/af87f984ddc3b43f3b70e1978731a2af9f959573/pom.xml#L68)，summary数据格式如下：
 
 ```
 [INFO] summary +   4099 in 00:00:06 =  683.9/s Avg:   176 Min:   160 Max:   498 Err:     0 (0.00%) Active: 120 Started: 120 Finished: 0 
