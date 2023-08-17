@@ -114,7 +114,7 @@
 
 看[etherscan gastracker](https://etherscan.io/gastracker)上的排名，现在在公链上最多的场景还是token转换。所以这里我们也部署uniswap V2合约进行压测，我们选取`swapExactETHForTokens`函数进行压测，用账户的资金（1000wei）换token，这样比较简单，因为我们对每个账户已经进行了充值都有资金，只需要一开始给这个token增加流动性即可。如果要压测`swapExactTokensForETH`函数的话，每个账户都需要充值该token以及执行`approve`授权uniswap路由合约操作token。
 
-1. 部署合约并执行`swapExactTokensForETH`一次获取`data`
+1. 部署合约并执行`swapExactTokensForETH`获取一次`data`
 
    ```bash
    npx hardhat test --grep "deployAndSwap" --network fantom_testnet
