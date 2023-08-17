@@ -52,20 +52,21 @@
    MINAMOUNT=0.001
    ```
 
-4. 给第一批账户转入FTM
+4. 部署批量转账合约并[将合约地址加到配置中](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/test/distribute.js#L18-L20)
+
+   如果给一个个账户转FTM的话非常低效，通过[合约](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/contracts/BatchTransfer.sol)批量转账好点，考虑到交易体大小有限制，一次交易[最多给50个账户转](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/test/distribute.js#L56)。
+
+   ```bash
+   # 这里记得把COUNT改成较小的值比如5，不然hardhat会生成COUNT数的sigenrs，这步会比较慢，影响case执行速度。
+   npx hardhat test --grep "deploy BatchTransfer" --network fantom_testnet
+   ```
+
+5. 给第一批账户转入FTM
 
    从助记词第一个账户给间隔`COUNT`的账户转入`DEPOSITAMOUNT`×`COUNT`×1.1个FTM。之所以是`DEPOSITAMOUNT`×`COUNT`×1.1个FTM而不是`DEPOSITAMOUNT`×`COUNT`个FTM，是为了让第一批账户有钱支付手续费。
 
    ```bash
    npx hardhat test --grep "recharge" --network fantom_testnet
-   ```
-
-5. 部署批量转账合约并[将合约地址加到配置中](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/test/distribute.js#L18-L20)
-
-   如果给一个个账户转FTM的话非常低效，通过[合约](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/contracts/BatchTransfer.sol)批量转账好点，考虑到交易体大小有限制，一次交易[最多给50个账户转](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/test/distribute.js#L56)。
-
-   ```bash
-   npx hardhat test --grep "deploy BatchTransfer" --network fantom_testnet
    ```
 
 6. 多进程分发FTM（默认4个进程）
@@ -83,6 +84,8 @@
    ```
 
 ## 2.合约数据准备
+
+*这里记得把COUNT改成较小的值比如5，不然hardhat会生成COUNT数的sigenrs，这步会比较慢，影响case执行速度。* 
 
 ### eth_call
 
