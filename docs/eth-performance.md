@@ -15,7 +15,7 @@
 
 统计维度是一个个块，调用`eth_blockNumber`不断查询，本地记录出块时间戳，每出一个块我们要统计和上一个块之间的时间间隔，再通过`eth_getBlockTransactionCountByNumber`得到新块的交易数量，交易数量除以时间间隔就是tps。
 
-统计交易成功率的是先通过`eth_getBlockByNumber`获取区块所有的交易hash，再通过多线程执行`eth_getTransactionReceipt`统计每笔交易的状态，然后计算当前块的成功率。[`eth_getBlockReceipts`的代码还没合](https://github.com/ethereum/go-ethereum/pull/27702)，还没成为没在[以太坊标准接口](https://ethereum.github.io/execution-apis/api-documentation/)里面，所以只能先用目前这种笨办法。
+统计交易成功率的是先通过`eth_getBlockByNumber`获取区块所有的交易hash，再通过多线程执行`eth_getTransactionReceipt`统计每笔交易的状态，然后计算当前块的成功率。撰写此文时[`eth_getBlockReceipts`的代码还没合](https://github.com/ethereum/go-ethereum/pull/27702)，还没在[以太坊标准接口](https://ethereum.github.io/execution-apis/api-documentation/)里面，所以只能先用目前这种笨办法。
 
 不断监控commands.txt文件的变化执行不同的函数，直到执行完`successRate`会结束ethStats服务。
 
