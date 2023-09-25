@@ -104,7 +104,7 @@
    tx data: 0x20965255
    ```
 
-3. 用`etc_call`调用一下合约的`getValue`函数
+3. 用`eth_call`调用一下合约的`getValue`函数
 
    ```bash
    curl https://rpc.testnet.fantom.network \
