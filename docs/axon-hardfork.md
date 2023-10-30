@@ -31,8 +31,10 @@ Currently, Axon has only one hardfork named `Andromeda`. The name of the hardfor
 
     You should see an output similar to this following:
 
+   `height: 6` indicates that the nodes are producing blocks normally. Querying with `axon_getHardforkInfo` and receiving `"result": {}` implies that hardfork is disabled.
+
    ```
-No process found listening on port 8001
+   No process found listening on port 8001
    No process found listening on port 8002
    No process found listening on port 8003
    No process found listening on port 8004
@@ -62,8 +64,6 @@ No process found listening on port 8001
      "id": 4
    }
    ```
-   
-   `height: 6` indicates that the nodes are producing blocks normally. Querying with `axon_getHardforkInfo` and receiving `"result": {}` implies that hardfork is disabled.
 
    
 
