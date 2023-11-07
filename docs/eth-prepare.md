@@ -57,7 +57,6 @@
    如果给一个个账户转FTM的话非常低效，通过[合约](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/contracts/BatchTransfer.sol)批量转账好点，考虑到交易体大小有限制，一次交易[最多给50个账户转](https://github.com/sunchengzhu/eth-prepare/blob/895ba1bc5ee4bb824bf72ffdbca720baf1894d6e/test/distribute.js#L56)。
 
    ```bash
-   # 这里最好把COUNT临时改成较小的值比如5（第5步记得改回来），不然hardhat生成COUNT数的sigenrs这步会比较慢，影响case执行速度。
    npx hardhat test --grep "deploy BatchTransfer" --network fantom_testnet
    ```
 
