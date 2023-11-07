@@ -13,7 +13,11 @@
 
 ### 设计
 
-通过两个workflow开展压测，[query.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/query.yml)是非交易接口`eth_getBalance`、`eth_getBlockByNumber`、`eth_call`的压测，而[tx.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/tx.yml)则是原生转账和uniswap `swapExactTokensForETH`交易接口`eth_sendRawTransaction`两个场景的压测。tx.yml会多一步触发[eth_performace的ethStats.yml](https://github.com/sunchengzhu/eth-performance/blob/main/.github/workflows/ethStats.yml)，统计交易性能数据。query.yml的接口是实时返回的，可以直接在客户端这边统计性能数据，我设置了[5s秒打印一次summary](https://github.com/sunchengzhu/eth-jmeter/blob/af87f984ddc3b43f3b70e1978731a2af9f959573/pom.xml#L68)，summary数据格式如下：
+通过两个workflow开展压测，[query.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/query.yml)是非交易接口`eth_getBalance`、`eth_getBlockByNumber`、`eth_call`的压测，而[tx.yml](https://github.com/sunchengzhu/eth-jmeter/blob/main/.github/workflows/tx.yml)则是原生转账和调用uniswap `swapExactTokensForETH`的交易接口`eth_sendRawTransaction`两个场景的压测。tx.yml会多一步触发[eth_performace的ethStats.yml](https://github.com/sunchengzhu/eth-performance/blob/main/.github/workflows/ethStats.yml)，统计交易性能数据。
+
+#### 查询
+
+query.yml的接口是实时返回的，可以直接在客户端这边统计性能数据，我设置了[5s秒打印一次summary](https://github.com/sunchengzhu/eth-jmeter/blob/af87f984ddc3b43f3b70e1978731a2af9f959573/pom.xml#L68)，summary数据格式如下：
 
 ```
 [INFO] summary +   4099 in 00:00:06 =  683.9/s Avg:   176 Min:   160 Max:   498 Err:     0 (0.00%) Active: 120 Started: 120 Finished: 0 
@@ -22,6 +26,16 @@
 query.yml如果有error能直接在控制台打印出来，并体现在summary的Err数中：
 
 <img src="https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20230816215300025.png" alt="image-20230816215300025" style="zoom:80%;" />  
+
+#### 交易
+
+交易从同一助记词生成的一批账户发起（账户充值见前面的文章），账户数量通过下方的size配置，从第一个账户到最后一个账户按序签名并发送交易，在jmeter设置的执行时间内不断循环这个过程。
+
+<img src="https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20231107172145909.png" alt="image-20231107172145909" style="zoom:80%;" />
+
+助记词的具体值mnemonicValue在Run workflow时由用户自己传入，以保护其不被泄漏。gasPriceValue等则配置在tx.yml中，[不同环境设置相应的值](https://github.com/sunchengzhu/eth-jmeter/blob/2661ab7c8b90256bfb9e469db1de3323ccc8a865/.github/workflows/tx.yml#L48-L53)。
+
+![image-20231107173931633](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20231107173931633.png)
 
 ## 使用tx.yml
 
