@@ -33,7 +33,7 @@ query.yml如果有error能直接在控制台打印出来，并体现在summary�
 
 <img src="https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20231107172145909.png" alt="image-20231107172145909" style="zoom:80%;" />
 
-助记词的具体值mnemonicValue在Run workflow时由用户自己传入，以保护其不被泄漏。gasPriceValue等则配置在tx.yml中，[不同环境设置相应的值](https://github.com/sunchengzhu/eth-jmeter/blob/2661ab7c8b90256bfb9e469db1de3323ccc8a865/.github/workflows/tx.yml#L48-L53)。
+助记词的具体值mnemonicValue在Run workflow时由用户自己传入，以保护其不被泄漏。gasPriceValue等则配置在tx.yml中，[不同环境设置其相应的值](https://github.com/sunchengzhu/eth-jmeter/blob/2661ab7c8b90256bfb9e469db1de3323ccc8a865/.github/workflows/tx.yml#L48-L53)。
 
 ![image-20231107173931633](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20231107173931633.png)
 
