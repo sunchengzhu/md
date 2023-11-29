@@ -72,3 +72,5 @@
 4. Debug
 
    测试过程一闪而过非常快，如果需要在某个用例执行后sleep个几秒观察metamask的返回值，可以参考[pr 1593](https://github.com/axonweb3/axon/pull/1593/files)。
+   
+   dappeteer测试框架在测试结束后会自动关闭整个测试版chrome页面，如果不希望关掉（比如你想用结合chrome开发者工具仔细研究）也可以用http-server+本地chrome，即启动http-server后直接通过类似`http://127.0.0.1:8080/eth_getCode.html`这样的url直接测试，当前请求的区块链网络就是你本地Metamask选择的网络。
