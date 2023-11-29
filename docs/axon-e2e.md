@@ -9,7 +9,7 @@
 2. 安装依赖
 
    ```bash
-   cd axon/e2e
+   cd axon/tests/e2e
    yarn install
    ```
 
@@ -58,7 +58,7 @@
    # 执行所有用例
    yarn test
    # 执行单个用例
-   jest tests/e2e/src/eth_getCode.test.js
+   jest src/eth_getCode.test.js
    ```
 
 3. Metamask手动操作
