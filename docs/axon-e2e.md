@@ -63,7 +63,7 @@
 
 3. Metamask手动操作
 
-   执行上面的测试命令后，会开启一个测试版chrome页面以及弹出metamask插件，请手动勾选"I agree"点击"Import an existing wallet"按钮，后面测试步骤才能自动执行。
+   执行上面的测试命令后，会开启一个测试版chrome页面以及弹出metamask插件，请手动勾选"I agree"并点击"Import an existing wallet"按钮，后面测试步骤才能自动执行。
 
    ![image-20231129231859596](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20231129231859596.png)
 
@@ -71,4 +71,4 @@
 
 4. Debug
 
-   测试过程一闪而过非常快，如果需要要在某个用例执行后sleep个几秒观察metamask返回值，可以参考[pr 1593](https://github.com/axonweb3/axon/pull/1593/files)。
+   测试过程一闪而过非常快，如果需要在某个用例执行后sleep个几秒观察metamask的返回值，可以参考[pr 1593](https://github.com/axonweb3/axon/pull/1593/files)。
