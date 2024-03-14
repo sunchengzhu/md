@@ -53,6 +53,7 @@ version: 0
 CKB> account new
 # 列出所有账户
 CKB> account list
+# 后续命令都省略掉"CKB>"，方便复制
 ```
 
 ```yaml
@@ -98,17 +99,17 @@ CKB> account list
 2. account_0给account_1[转账1w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08)
 
    ```bash
-   CKB> wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-account ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
+   wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-account ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
    ```
 
 3. 查询account_0和account_1的余额
 
    ```bash
    # account_0
-   CKB> wallet get-capacity --address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
+   wallet get-capacity --address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
    total: 289999.99999536 (CKB)
    # account_1
-   CKB> wallet get-capacity --address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp
+   wallet get-capacity --address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp
    total: 10000.0 (CKB)
    ```
 
@@ -154,7 +155,7 @@ CKB> account list
 1. 初始化deployment.toml文件
 
    ```bash
-   CKB> deploy init-config --deployment-config deployment.toml
+   deploy init-config --deployment-config deployment.toml
    ```
 
 2. 修改deployment.toml
@@ -232,7 +233,7 @@ CKB> account list
    ```
 
    ```bash
-   CKB> deploy gen-txs \
+   deploy gen-txs \
        --deployment-config ./deployment.toml \
        --migration-dir ./migrations \
        --from-address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f \
@@ -258,7 +259,7 @@ CKB> account list
 4. 签名
 
    ```bash
-   CKB> deploy sign-txs \
+   deploy sign-txs \
        --from-account ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f \
        --add-signatures \
        --info-file info.json
@@ -275,7 +276,7 @@ CKB> account list
 5. 发送交易
 
    ```bash
-   CKB> deploy apply-txs --migration-dir ./migrations --info-file info.json
+   deploy apply-txs --migration-dir ./migrations --info-file info.json
    ```
 
    ```yaml
@@ -294,7 +295,7 @@ CKB> account list
 1. 初始化tx.json文件
 
    ```bash
-   CKB> tx init --tx-file tx.json
+   tx init --tx-file tx.json
    ```
 
    **原始的tx.json模板**
@@ -320,7 +321,7 @@ CKB> account list
    index选account_1的cell
 
    ```bash
-   CKB> tx add-input --tx-hash 0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08 --index 0 --tx-file tx.json
+   tx add-input --tx-hash 0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08 --index 0 --tx-file tx.json
    ```
 
 3. 把account_2放到output中
@@ -328,7 +329,7 @@ CKB> account list
    目的是销毁掉account_1的cell，创建出account_2的新cell。创建过程会通过code_hash引用account_0 cell的合约script然后传入args执行生成新的cell，这个过程可以视作是对合约的一次调用。
 
    ```bash
-   CKB> tx add-output --to-sighash-address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw --capacity 9999.123 --tx-file tx.json
+   tx add-output --to-sighash-address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw --capacity 9999.123 --tx-file tx.json
    ```
 
    **命令修改后的tx.json**
@@ -380,7 +381,7 @@ CKB> account list
 4. 查看交易详情
 
    ```bash
-   CKB> tx info --tx-file tx.json
+   tx info --tx-file tx.json
    ```
 
    ```yaml
@@ -428,13 +429,13 @@ CKB> account list
 7. 导出account_1的私钥
 
    ```bash
-   CKB> account export --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --extended-privkey-path  ./account_1.demo
+   account export --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --extended-privkey-path  ./account_1.demo
    ```
 
 8. 构建签名
 
    ```bash
-   CKB> tx sign-inputs --privkey-path ./account_1.demo --tx-file tx.json
+   tx sign-inputs --privkey-path ./account_1.demo --tx-file tx.json
    ```
 
    ```yaml
@@ -445,7 +446,7 @@ CKB> account list
 9. 将上述签名添加到tx.json
 
    ```bash
-   CKB> tx add-signature --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --signature 0xfe5b3db9618d8ead16ffb414ac9aa5ffda03c2f4490962270322c28ffbcff7a36ed5f745ea426fdc3567089e04a97f9f4ed31136df3238199cf3fad8edd07e4400 --tx-file tx.json
+   tx add-signature --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --signature 0xfe5b3db9618d8ead16ffb414ac9aa5ffda03c2f4490962270322c28ffbcff7a36ed5f745ea426fdc3567089e04a97f9f4ed31136df3238199cf3fad8edd07e4400 --tx-file tx.json
    ```
 
    **最终使用的tx.json**
@@ -512,7 +513,7 @@ CKB> account list
 10. 发送交易
 
     ```bash
-    CKB> tx send --tx-file tx.json
+    tx send --tx-file tx.json
     ```
 
     返回交易hash：[0x82e66704a5868a738512761c97db1873e0c9fa971beb177f330112beb78199fe](https://pudge.explorer.nervos.org/zh/transaction/0x82e66704a5868a738512761c97db1873e0c9fa971beb177f330112beb78199fe)
@@ -520,7 +521,7 @@ CKB> account list
 11. 查询account_2的cell
 
     ```bash
-    CKB> wallet get-live-cells --address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw
+    wallet get-live-cells --address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw
     ```
 
     ```yaml
@@ -542,4 +543,10 @@ CKB> account list
 
     说明调用成功
 
-12. 
+## 参考资料
+
+1. [Deploy contracts](https://github.com/nervosnetwork/ckb-cli/wiki/Deploy-contracts)
+
+2. [Handle Complex Transaction](https://github.com/nervosnetwork/ckb-cli/wiki/Handle-Complex-Transaction)
+
+3. [最简合约](https://docs-xi-two.vercel.app/docs/docs/script/script-minimal)
