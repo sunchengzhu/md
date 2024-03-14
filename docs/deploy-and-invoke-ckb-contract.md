@@ -543,6 +543,8 @@ CKB> account list
 
     说明调用成功
 
+    可以在[script引用的Cells](https://pudge.explorer.nervos.org/zh/script/0x9b34af6134718d2845ebf7c6ca148be6e1034c20c38414d09541e6d708fb3a7b/type/referring_cells)找到这笔交易
+
 ## 参考资料
 
 1. [Deploy contracts](https://github.com/nervosnetwork/ckb-cli/wiki/Deploy-contracts)
