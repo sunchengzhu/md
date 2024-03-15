@@ -94,21 +94,21 @@ CKB> account list
 
 ### 给测试账户充值
 
-1. 通过[水龙头](https://faucet.nervos.org/)给account_0[充值30w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x4ea605d6ffac5a5c54a606a248d461bb18dfd62119987bd0c9a2b02e8c6bd8ad)
+1. 通过[水龙头](https://faucet.nervos.org/)给address_0[充值30w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x4ea605d6ffac5a5c54a606a248d461bb18dfd62119987bd0c9a2b02e8c6bd8ad)
 
-2. account_0给account_1[转账1w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08)
+2. 从address_0给address_1[转账1w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08)
 
    ```bash
-   wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-account ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
+   wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
    ```
 
-3. 查询account_0和account_1的余额
+3. 查询address_0和address_1的余额
 
    ```bash
-   # account_0
+   # address_0
    wallet get-capacity --address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
    total: 289999.99999536 (CKB)
-   # account_1
+   # address_1
    wallet get-capacity --address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp
    total: 10000.0 (CKB)
    ```
@@ -204,7 +204,7 @@ CKB> account list
    threshold = 2
    ```
 
-   我们只需要配置一下本地的合约文件路径、空的dep_groups、以及发起账户的lock，例子中我们通过account_0发起部署合约的交易。
+   我们只需要配置一下本地的合约文件路径、空的dep_groups、以及发起账户的lock，例子中我们通过address_0发起部署合约的交易。
 
    **修改后的deployment.toml**
 
@@ -284,7 +284,7 @@ CKB> account list
    > [send dep group transaction]: 0x43a7d66d01a3bc5acdacb796968faf12be3f4852f0e917ce1cadcd59dbcd37cb
    ```
 
-   可以在[这笔交易](https://pudge.explorer.nervos.org/zh/transaction/0x592217b4ad54a812780bc4a23e7d5c742c968b512f8d951c7ce072e35fb6becc)里看到account_0新创建了一个包含type script的cell，说明合约已经部署成功。
+   可以在[这笔交易](https://pudge.explorer.nervos.org/zh/transaction/0x592217b4ad54a812780bc4a23e7d5c742c968b512f8d951c7ce072e35fb6becc)里看到address_0新创建了一个包含type script的cell，说明合约已经部署成功。
 
    ![image-20240314230929623](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20240314230929623.png)
 
@@ -316,17 +316,17 @@ CKB> account list
    }
    ```
 
-2. 把给account_1转账交易的交易hash放到input中
+2. 把给address_1转账交易的交易hash放到input中
 
-   index选account_1的cell
+   index选address_1的cell
 
    ```bash
    tx add-input --tx-hash 0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08 --index 0 --tx-file tx.json
    ```
 
-3. 把account_2放到output中
+3. 把address_2放到output中
 
-   目的是销毁掉account_1的cell，创建出account_2的新cell。创建过程会通过code_hash引用account_0 cell的合约script然后传入args执行生成新的cell，这个过程可以视作是对合约的一次调用。
+   目的是销毁掉address_1的cell，创建出address_2的新cell。创建过程会通过code_hash引用address_0 cell的合约script然后传入args执行生成新的cell，这个过程可以视作是对合约的一次调用。
 
    ```bash
    tx add-output --to-sighash-address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw --capacity 9999.123 --tx-file tx.json
@@ -426,16 +426,16 @@ CKB> account list
    }
    ```
 
-7. 导出account_1的私钥
+7. 导出address_1的私钥
 
    ```bash
-   account export --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --extended-privkey-path  ./account_1.demo
+   account export --lock-arg 0x1b84c2a11c7bcd300766564b1c2de971873c32e0 --extended-privkey-path  ./address_1.demo
    ```
 
 8. 构建签名
 
    ```bash
-   tx sign-inputs --privkey-path ./account_1.demo --tx-file tx.json
+   tx sign-inputs --privkey-path ./address_1.demo --tx-file tx.json
    ```
 
    ```yaml
@@ -518,7 +518,7 @@ CKB> account list
 
     返回交易hash：[0x82e66704a5868a738512761c97db1873e0c9fa971beb177f330112beb78199fe](https://pudge.explorer.nervos.org/zh/transaction/0x82e66704a5868a738512761c97db1873e0c9fa971beb177f330112beb78199fe)
 
-11. 查询account_2的cell
+11. 查询address_2的cell
 
     ```bash
     wallet get-live-cells --address ckt1qyqgk3lp7razc77z345l4xwc6f276s9qz3jskfzcmw
