@@ -99,7 +99,7 @@ CKB> account list
 2. 从address_0给address_1[转账1w ckb](https://pudge.explorer.nervos.org/zh/transaction/0x80ffb22cef042d94b02b95b29ef0148e859ffb997febb4dd84a863ccea5afc08)
 
    ```bash
-   wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-address ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
+   wallet transfer --to-address ckt1qyqphpxz5yw8hnfsqan9vjcu9h5hrpeuxtsq7du7yp --capacity 10000.0 --from-account ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f
    ```
 
 3. 查询address_0和address_1的余额
