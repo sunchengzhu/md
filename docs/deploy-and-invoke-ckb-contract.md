@@ -396,9 +396,26 @@ CKB> account list
 
 5. 手动修改output cell的type
 
-   code_hash可以查看[账户](https://pudge.explorer.nervos.org/zh/address/ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f)的UTXO获取，在之前浏览器不展示code_hash的时候我们通过[这个函数](https://github.com/cryptape/ckb-py-integration-test/blob/305befb02f5acd9b37ff7f79d43b7bb01e45046b/framework/helper/contract.py#L65-L82)获取。
+   type的code_hash可以查看[账户](https://pudge.explorer.nervos.org/zh/address/ckt1qyqte0je59tpxpdhrv43dj7j4r2ages9z2vs3krv4f)的UTXO获取，在之前浏览器不展示type script hash的时候我们可以直接看migrations文件夹下json文件的type_id字段或者通过[这个函数](https://github.com/cryptape/ckb-py-integration-test/blob/305befb02f5acd9b37ff7f79d43b7bb01e45046b/framework/helper/contract.py#L65-L82)获取。
 
    ![](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20240315000706603.png)
+
+   ```python
+   from framework.helper.contract import get_ckb_contract_codehash
+   
+   
+   def main():
+       tx_hash = "0x592217b4ad54a812780bc4a23e7d5c742c968b512f8d951c7ce072e35fb6becc"
+       tx_index = 0
+       api_url = "https://testnet.ckbapp.dev"
+   
+       codehash = get_ckb_contract_codehash(tx_hash, tx_index, api_url=api_url)
+       print("Type Code Hash:", codehash)
+   
+   
+   if __name__ == "__main__":
+       main()
+   ```
 
    修改后的type
 
