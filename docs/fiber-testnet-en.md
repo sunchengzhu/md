@@ -1,4 +1,4 @@
-# Fiber Testnet Public Nodes User Manual
+# Testnet Public Nodes User Manual
 
 ## Testnet Public Nodes’ Addresses
 node1
