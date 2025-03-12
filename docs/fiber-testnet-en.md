@@ -1,66 +1,6 @@
-# fiber测试网公共节点使用手册
+# Fiber Testnet Public Nodes User Manual
 
-## 部署节点
-
-1. 下载fnn
-
-   以macOS (Apple silicon)版本为例
-
-   ```bash
-   mkdir tmp && cd tmp
-   wget https://github.com/nervosnetwork/fiber/releases/download/v0.4.0/fnn_v0.4.0-x86_64-darwin-portable.tar.gz
-   tar xzvf fnn_v0.4.0-x86_64-darwin-portable.tar.gz
-   ```
-
-   
-
-2. 把账户私钥导出到fiber节点的ckb目录下
-
-   这边用到的是ckb-cli创建的账户，后续这个账户会为本地节点和测试网公共节点建立channel付费。如果未安装ckb-cli，请前往[releases](https://github.com/nervosnetwork/ckb-cli/releases)下载。
-
-   创建本地节点nodeA目录
-
-   ```bash
-   mkdir -p testnet-fnn/nodeA/ckb
-   ./ckb-cli account new
-   ./ckb-cli account export  --lock-arg 0xcc015401df73a3287d8b2b19f0cc23572ac8b14d --extended-privkey-path exported-key
-   head -n 1 ./exported-key > testnet-fnn/nodeA/ckb/key
-   chmod 600 testnet-fnn/nodeA/ckb/key
-   # check nodeA key
-   ./ckb-cli util key-info  --privkey-path testnet-fnn/nodeA/ckb/key
-   ```
-
-
-
-
-3. 复制config.yml
-
-   ```bash
-   cp config/testnet/config.yml testnet-fnn/nodeA
-   ```
-   
-   
-   
-4. 通过faucet给nodeA节点的地址充值10000ckb和100RUSD。
-
-   RUSD的faucet没有办法直接填地址领，所以可以先连接joyid这样的钱包领100RUSD，再通过[joyid钱包页面](https://testnet.joyid.dev)转账给nodeA节点的地址。
-
-   - ckb: https://faucet.nervos.org
-
-   - RUSD: https://testnet0815.stablepp.xyz/faucet
-
-     
-   
-5. 启动节点
-
-   ```bash
-   RUST_LOG=info ./fnn -c testnet-fnn/nodeA/config.yml -d testnet-fnn/nodeA > testnet-fnn/nodeA/a.log 2>&1 &
-   ```
-   
-
-
-
-## 测试网公共节点地址
+## Testnet Public Nodes’ Addresses
 node1
 
 ```bash
@@ -75,10 +15,69 @@ node2
 
 
 
-## 和公共节点1建立ckb channel
+## Node Deployment
+
+1. Download fnn
+
+   Example for macOS (Apple silicon):
+
+   ```bash
+   mkdir tmp && cd tmp
+   wget https://github.com/nervosnetwork/fiber/releases/download/v0.4.0/fnn_v0.4.0-x86_64-darwin-portable.tar.gz
+   tar xzvf fnn_v0.4.0-x86_64-darwin-portable.tar.gz
+   ```
+
+   
+
+2. Export the account private key to the fiber node’s ckb directory
+
+   Here, the ckb-cli is used to create an account, which will later be used to pay for opening  channels between the local node and the public testnet node. If ckb-cli is not installed, please download it from the [releases](https://github.com/nervosnetwork/ckb-cli/releases).
+
+   ```bash
+   # Create a local node directory named nodeA
+   mkdir -p testnet-fnn/nodeA/ckb
+   ./ckb-cli account new
+   ./ckb-cli account export  --lock-arg 0xcc015401df73a3287d8b2b19f0cc23572ac8b14d --extended-privkey-path exported-key
+   head -n 1 ./exported-key > testnet-fnn/nodeA/ckb/key
+   chmod 600 testnet-fnn/nodeA/ckb/key
+   # check nodeA key
+   ./ckb-cli util key-info  --privkey-path testnet-fnn/nodeA/ckb/key
+   ```
 
 
-1. 建立nodeA和node1的网络连接
+
+
+3. Copy config.yml
+
+   ```bash
+   cp config/testnet/config.yml testnet-fnn/nodeA
+   ```
+   
+   
+   
+4. Fund nodeA’s address with 10000ckb and 100RUSD via faucet
+
+   The RUSD faucet cannot directly fill an address, so you can first claim 100RUSD through a wallet like joyid, then transfer it to nodeA’s address from [the joyid wallet page](https://testnet.joyid.dev/).
+
+   - ckb: https://faucet.nervos.org
+
+   - RUSD: https://testnet0815.stablepp.xyz/faucet
+
+     
+   
+5. Start the node A
+
+   ```bash
+   RUST_LOG=info ./fnn -c testnet-fnn/nodeA/config.yml -d testnet-fnn/nodeA > testnet-fnn/nodeA/a.log 2>&1 &
+   ```
+   
+
+
+
+## Establishing a CKB Channel with Public Node 1
+
+
+1. Establish a network connection between nodeA and node1
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -99,9 +98,9 @@ node2
 
 
 
-2. 建立一个500ckb的channel: nodeA (500ckb) ⟺ node1 (0)
+2. Establish a channel with 500ckb: nodeA (500ckb) ⟺ node1 (0)
 
-   _node1配置的自动接受最小资金是500ckb，所以请传入500ckb及以上的funding_amount_
+   _Node1 has auto_accept_channel_ckb_funding_amount set at 500ckb, so please input 500ckb or more._
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -124,7 +123,7 @@ node2
 
 
 
-3. 查询nodeA和node1之间channels
+3. Query the channels between nodeA and node1
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -139,9 +138,9 @@ node2
    }'
    ```
 
-   等到state_name变为CHANNEL_READY
+   Wait until the state_name changes to CHANNEL_READY.
    
-   **注意：channel刚变为CHANNEL_READY状态时，向其发送send_payment，仍可能报`error: Failed to build route`，可以等待一段时间后再重试。**
+   **Note: When the channel has just changed to the CHANNEL_READY state and you attempt to use send_payment, you may still encounter an error: `Failed to build route`. It is advisable to wait for some time before trying again.**
    
    ```json
    {"jsonrpc":"2.0","result":{"channels":[{"channel_id":"0x26ce85d57fb4a1a826cbf4862358862317a83b775090625550d8be12c6ce9569","is_public":true,"channel_outpoint":"0x9bb2a8a4bebaf793a235ba2ec87051ae0018b58736b6741df74009ca8101cb8d00000000","peer_id":"QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0xa32aef600","offered_tlc_balance":"0x0","remote_balance":"0x460913c00","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x18ef541a5a195c0ea4715a7783964b3c4be8fba6bd25542e626f91ef1673e3e4","created_at":"0x195892d237f","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"}]},"id":3
@@ -149,9 +148,9 @@ node2
 
 
 
-4. 调用node2的new_invoice接口生成一个invoice
+4. Call the new_invoice API on node2 to generate an invoice
 
-   amount设置成0x5f5e100(100000000 shannon)，也就是1个ckb。payment_preimage需要使用唯一的32字节16进制数。
+   Set the amount to 0x5f5e100 (100,000,000 shannon), which is equivalent to 1 CKB. The payment_preimage should be a unique 32-byte hexadecimal number.
 
    ```bash
    # Generate a 32-byte random number and represent it in hexadecimal
@@ -186,15 +185,15 @@ node2
    {"jsonrpc":"2.0","result":{"invoice_address":"fibt1000000001peseucdphcxgfw0pnm6vk3uftyc36dakyjchs0p0unk9gaug0h36uhafww9pvy38gcesad084rx48xgx9xts49yp9fn87yfchld3l3qu5n0pfzvvy8c9g7dksrcxyrtk3hymspezmvtx4vg5v6uvt6tyxmq5uhrfejpk0j6wue9ef2pa8mzmrgqaz3wucutujtjcmq2x8f36faxuctg62ny73mhaj7rpwqe0ns0wp5wr4tku7qcl9r4a3swluvd2jqqwmsl7wsz4cwvhhe7p8tr7hz5qkqwr3r38hukckqzjtmntd8zrz0ywux4u8df005hl76thzsp9hz7dyefzk4mqhx4x9el98zjzmhcveqpfeur79","invoice":{"currency":"Fibt","amount":"0x5f5e100","signature":"0e1b101f1e0e100215180e0c1717191e01070b031e1702140016000e0311031107171c1618160002120b1b130b0d070203020f040e1c06151c070d090f0f14171f1e1a0b170210010517021e0d0419090216151b001706150605191f05070212021b17180c190001","data":{"timestamp":"0x1958944fa64","payment_hash":"0xafb604f74c28009732ed4c82983cf1efaddf62ee36442f360fb4a8c79b845432","attrs":[{"Description":"test invoice generated by node2"},{"ExpiryTime":{"secs":3600,"nanos":0}},{"HashAlgorithm":"sha256"},{"PayeePublicKey":"0291a6576bd5a94bd74b27080a48340875338fff9f6d6361fe6b8db8d0d1912fcc"}]}}},"id":4}
    ```
    
-   记录下response中的invoice_address
+   Record the invoice_address from the response.
    
    
    
-5. 让nodeA付款前先查询一下各channel的local_balance和remote_balance
+5. Before nodeA sends the payment, first query the local_balance and remote_balance of each channel
 
    nodeA ⟺ node1
 
-   从前面的步骤3可知`{"local_balance":"0xa32aef600","remote_balance":"0x460913c00"}`
+   As shown in Step 3, the response included: `{"local_balance":"0xa32aef600","remote_balance":"0x460913c00"}`
    
    node1 ⟺ node2
    
@@ -214,7 +213,7 @@ node2
     ```json
     {"jsonrpc":"2.0","result":{"channels":[{"channel_id":"0x29a2e93e70fcfcd8b64fd74646b3893247f2a73a9dd8706298b5defa17bfee0a","is_public":true,"channel_outpoint":"0xa065311059be4d2194d9d6dbc428fe794ed3c6d91e08fe1d960d1574c19f88d400000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":{"code_hash":"0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a","hash_type":"type","args":"0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"},"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x173c0e06bb","offered_tlc_balance":"0x1f5","remote_balance":"0xc68e145","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x195e1cbd1dd062752e776a44dd9c12f3b83a69dfdd1e22edff19025572bcbd25","created_at":"0x1944491c154","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x4cd5bdcac419b203fd5752c4daa00a6f24305123d65f7a7fa6b455df82e97eee","is_public":true,"channel_outpoint":"0xe7d8464be26933021810f31252a98e9b2b1ff00f70173fafb134861ce21bccbb00000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":{"code_hash":"0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a","hash_type":"type","args":"0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"},"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x1748630df7","offered_tlc_balance":"0x0","remote_balance":"0x13da09","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x6bd9890fd65297359079d87a995d794becc90bafd5eca9676ccbfd96abcb3ffd","created_at":"0x194448fc295","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x9e72e8dbf7409a5aaf456dbe25f61247450f72079249ee508bb23cb14d0408b1","is_public":true,"channel_outpoint":"0x49f5f1cf664d48df66943989ef87d1316f1dffe5aec96db9ee8f1b6879ccac1b00000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":{"code_hash":"0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a","hash_type":"type","args":"0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"},"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0xa38b9d","offered_tlc_balance":"0x0","remote_balance":"0x1747d35c63","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x6ad24a7dda73ed2ff896401ba4487c207362510670295b60288040df4b78884d","created_at":"0x194448ea599","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x632548057f0f13752e6d55ea666a93aaae450f2cf6e31093142c940071648f88","is_public":true,"channel_outpoint":"0xb0fcf51f0587c3c623377d054874dbb6ff1e8a26950834ace30dc88003af05f900000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":{"code_hash":"0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a","hash_type":"type","args":"0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"},"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0xc505f","offered_tlc_balance":"0x0","remote_balance":"0x17486a97a1","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x62892d0751149af74d6baa7d7e09215427858d8dd047ae62b9179c8779d236e5","created_at":"0x194448dbf4b","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x0d54942293e7bb2704749e85741fd65e9a3d2f4eb380eb33b0aa0d38f891638f","is_public":true,"channel_outpoint":"0xf846f128450f3319352e8b48a38060feaed09d834f8d1c4d98477069f64ef78100000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x45a9b5cf3","offered_tlc_balance":"0x0","remote_balance":"0x916e2dc010d","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x68002aad33179b3d7bd21234ecf7a296f71833ecd4a69632e294c583e73181ff","created_at":"0x1944489267e","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x4c84c39f5166eb15631fca02dbc1910fa0139ad0ec6732ab2cc51c275d8fc11b","is_public":true,"channel_outpoint":"0x5c871464dc91eaf6fb262157329dc90d00b96cafaf272bd322184cab5d2601fa00000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x504f21d045c","offered_tlc_balance":"0x0","remote_balance":"0x4164b5a59a4","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x117b18ac0789b44e3a08504d503a9cbf29acd2a4050069a640f67d7ec8209a00","created_at":"0x1944487f433","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x728fce53aaedf010b8f7c09497f3ab8527382ada0b6691cc61c04badf4837296","is_public":true,"channel_outpoint":"0x713364717227e24ebcf1b1ddd469f3f278e8b4069ebd23631d2aca12fffa2e1c00000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x916d6f044e9","offered_tlc_balance":"0x0","remote_balance":"0x466871917","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x83a0d88fd312bb14f3cf953888257581d859230d1230b21b487a5cda48be7c8d","created_at":"0x1944485b77f","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0xfb27dc9ebc391440afe5e25cd4dc25e302b6fbb089397eda07decdb04db14b9e","is_public":true,"channel_outpoint":"0x56b3edb1dd683f9149286069881395bb878c69fbff638b7dc6d1bca1c83acd6400000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x48ab5ace976","offered_tlc_balance":"0x0","remote_balance":"0x49087ca748a","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0xe6a25f3420db9f0a436df0214fa5622a39a8975549f861f941d33cf8fba19e2e","created_at":"0x1944483b877","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"},{"channel_id":"0x92b04366f93500efef5f28ba79704fa3a0e3771148899aa8836f0e5d2fbc38d5","is_public":true,"channel_outpoint":"0x61368447e60f0aa15ef61e13539d19d2f32fbacb20728db4248d8c82fa56079a00000000","peer_id":"QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0x48ab5acd200","offered_tlc_balance":"0x0","remote_balance":"0x49087ca8c00","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x6048cd50eb71aa8fabda1a5d567ceb5fb84181efbb36d839245e253e382bbfaf","created_at":"0x194447dd85a","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"}]},"id":5}
     ```
-   找出response中funding_udt_type_script为null的数据
+   Find all entries in the response where `funding_udt_type_script` is null.
    ```json
    {"local_balance":"0x45a9b5cf3","remote_balance":"0x916e2dc010d"}
    {"local_balance":"0x504f21d045c","remote_balance":"0x4164b5a59a4"}
@@ -225,9 +224,9 @@ node2
 
 
 
-6. 向nodeA发送send_payment，实现nodeA向node2付款。
+6. Send a send_payment request to nodeA to pay node2
 
-   传入之前记录的invoice_address
+   Pass in the previously recorded invoice_address to the `send_payment` request
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -248,47 +247,55 @@ node2
 
 ​	
 
-7. 重复步骤4和步骤6，再执行两次new_invoice和send_payment，amount仍设置成0x5f5e100。
+7. Repeat Steps 4 and 6 two more times
+
+   Performing two additional `new_invoice` and `send_payment` requests, keeping the amount set to 0x5f5e100.
 
 
 
-8. 再次查询各channel的local_balance和remote_balance
+8. Query the local_balance and remote_balance of each channel again
 
    nodeA ⟺ node1
 
-   从`{"local_balance":"0xa32aef600","remote_balance":"0x460913c00"}`变为`{"local_balance":"0xa2cb78e60","remote_balance":"0x46688a3a0"}`
+   Balances changed from`{"local_balance":"0xa32aef600","remote_balance":"0x460913c00"}`to`{"local_balance":"0xa2cb78e60","remote_balance":"0x46688a3a0"}`.
 
    node1 ⟺ node2
 
-   其余未变，`{"local_balance":"0x48ab5acd200","remote_balance":"0x49087ca8c00"}`变为`{"local_balance":"0x48aa3cb2f00","remote_balance":"0x49099ac2f00"}`
+   Balances changed from `{"local_balance":"0x48ab5acd200","remote_balance":"0x49087ca8c00"}`to`{"local_balance":"0x48aa3cb2f00","remote_balance":"0x49099ac2f00"}`.
 
-   也就是说，付款前后channels的金额完成了下面的变化：
+   All other entries remain unchanged.
 
-   - 付款前
+   
+
+   This means the channel balances have changed as follows before and after the payments:
+
+   - Before payments
 
      nodeA (43800000000) ⟺ node1 (18800000000)
 
      node1 (4993800000000) ⟺ node2 (5018800000000)
 
-   - 付款后
+   - After payments
 
      nodeA (43499700000) ⟺ node1 (19100300000)
 
      node1 (4993500000000) ⟺ node2 (5019100000000)
 
-   nodeA资金变化：43499700000 - 43800000000 = -300300000 
+   Funds changes:
 
-   node1资金变化：4993500000000 + 19100300000 - 4993800000000 - 18800000000 = 300000  
+   ​	nodeA: 43499700000 - 43800000000 = -300300000 
+   
+   ​	node1: 4993500000000 + 19100300000 - 4993800000000 - 18800000000 = 300000  
+   
+   ​	node2: 5019100000000 - 5018800000000 =300000000  
+   
+   **Conclusion: Three CKB payments of 100,000,000 shannon each from nodeA → node1 → node2 were successfully completed. The intermediate node (node1) earned a total fee of 300,000 shannon.**
 
-   node2资金变化：5019100000000 - 5018800000000 =300000000  
-
-   **综上可以看出成功完成了nodeA → node1 → node2金额为100000000 shannon的3笔ckb转账，中间节点node1获得了300000 shannon手续费。**
 
 
+9. Close the channel between nodeA and node1
 
-9. 关闭这个nodeA和node1的channel
-
-   传入channel_id和接收通道余额的地址
+   Pass in the channel_id and the receiving address as parameters.
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -313,19 +320,20 @@ node2
    {"jsonrpc":"2.0","result":null,"id":9}
    ```
 
-   可以在ckb explorer上看到nodeA的地址新增了一笔+496.99699462CKB的交易，也就是说在fiber节点上多次转账ckb最终会在shutdown_channel关闭channel时在链上结算。
+   You can see on the CKB explorer that nodeA’s address received a new transaction of +496.99699462 CKB.
+   This indicates that multiple off-chain CKB transfers through Fiber nodes are eventually settled on-chain upon channel closure via the shutdown_channel request.
+   
+   
+
+## Establishing a UDT Channel with Public Node 1
+
+1. Establish a network connection between nodeA and node1
 
    
 
-## 和公共节点1建立udt channel
+2.  Establish a channel with 100 RUSD: nodeA (100 RUSD) ⟺ node1 (0)
 
-1. 建立nodeA和node1的网络连接
-
-   
-
-2. 建立一个100RUSD的channel: nodeA (100RUSD) ⟺ node1 (0)
-
-   _node1配置的自动接受最小资金是100RUSD，所以请传入100RUSD及以上的funding_amount_
+   _Please pass in a funding_amount of 100 RUSD or more_
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -353,7 +361,7 @@ node2
 
    
 
-3. 查询nodeA和node1之间channels
+3. Query the channels between nodeA and node1
 
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
@@ -375,11 +383,11 @@ node2
 
 
 
-4. 调用node2的new_invoice接口生成一个invoice
+4. Call the new_invoice API on node2 to generate an invoice
 
-   amount设置成0x5f5e100(100000000)，也就是1个RUSD。
+   Set the amount to 0x5f5e100 (100,000,000), which is equivalent to 1 RUSD.
 
-   这边还是要用的唯一的payment_preimage，可以用`echo "0x$(openssl rand -hex 32)"`生成。
+   Here, a unique payment_preimage is still required. You can generate one using: `echo "0x$(openssl rand -hex 32)"`
 
    ```bash
    curl -s --location 'http://18.163.221.211:8227' --header 'Content-Type: application/json' --data '{
@@ -411,14 +419,14 @@ node2
 
    
 
-5. 让nodeA付款前先查询一下各channel的local_balance和remote_balance
+5. Before nodeA sends the payment, first query the local_balance and remote_balance of each channel
 
    nodeA ⟺ node1
 
-   从前面的步骤3可知`{"local_balance":"0x2540be400","remote_balance":"0x0"}`
-   
+   As shown in Step 3, the response included: `{"local_balance":"0x2540be400","remote_balance":"0x0"}`
+
    node1 ⟺ node2
-   
+
    ```bash
    curl -s --location 'http://18.162.235.225:8227' --header 'Content-Type: application/json' --data '{
        "id": 5,
@@ -431,18 +439,18 @@ node2
        ]
    }'
    ```
-   找出response中funding_udt_type_script不为null的数据
+   Find all entries in the response where `funding_udt_type_script` is not null.
    ```json
    {"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}
    {"local_balance":"0x1748630df7","remote_balance":"0x13da09"}
    {"local_balance":"0xa38b9d","remote_balance":"0x1747d35c63"}
    {"local_balance":"0xc505f","remote_balance":"0x17486a97a1"}
    ```
+
    
-   
-   
-6. 向nodeA发送send_payment，实现nodeA向node2付款。
-   
+
+6. Send a send_payment request to nodeA to pay node2
+
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
        "id": 6,
@@ -459,49 +467,57 @@ node2
    ```json
    {"jsonrpc":"2.0","result":{"payment_hash":"0x9d765b2d4cddf925ea9132acf48916144f12cbdb3208908ca0ca7fa53962f3f7","status":"Created","created_at":"0x195898ec027","last_updated_at":"0x195898ec027","failed_error":null,"fee":"0x186a0"},"id":6}
    ```
-   
+
       
-   
-7. 重复步骤4和步骤6，再执行两次new_invoice和send_payment，amount仍设置成0x5f5e100。
-   
+
+7. Repeat Steps 4 and 6 two more times
+
+   Performing two additional `new_invoice` and `send_payment` requests, keeping the amount set to 0x5f5e100.
+
       
-   
-8. 再次查询各channel的local_balance和remote_balance
-   
+
+8. Query the local_balance and remote_balance of each channel again
+
    nodeA ⟺ node1
-   
-   从`{"local_balance":"0x2540be400","remote_balance":"0x0"}`变为`{"local_balance":"0x24225ad20","remote_balance":"0x11e636e0"}`
-   
+
+   Balances changed from`{"local_balance":"0x2540be400","remote_balance":"0x0"}`to`{"local_balance":"0x24225ad20","remote_balance":"0x11e636e0"}`
+
    node1 ⟺ node2
+
+   Balances changed from`{"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}`to`{"local_balance":"0x172a2c63bb","remote_balance":"0x1e4a8445"}`
+
+   All other entries remain unchanged.
+
    
-   其余未变，`{"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}`变为`{"local_balance":"0x172a2c63bb","remote_balance":"0x1e4a8445"}`
-   
-   也就是说，付款前后channels的金额完成了下面的变化：
-   
-   - 付款前
-   
+
+   This means the channel balances have changed as follows before and after the payments:
+
+   - Before payments
+
      nodeA (10000000000) ⟺ node1 (0)
-   
+
      node1 (99791799995) ⟺ node2 (208200005)
-   
-   - 付款后
-   
+
+   - After payments
+
      nodeA (9699700000) ⟺ node1 (300300000)
-   
+
      node1 (99491799995) ⟺ node2 (508200005)
-   
-   nodeA资金变化：9699700000 - 10000000000 = -300300000 
-   
-   node1资金变化：99491799995 + 300300000 - 99791799995 = 300000 
-   
-   node2资金变化：508200005 - 208200005 = 300000000 
-   
-   **综上可以看出成功完成了nodeA → node1 → node2金额为100000000的3笔udt转账，中间节点node1获得了300000手续费。**
-   
+
+   Funds changes:
+
+   ​	nodeA: 9699700000 - 10000000000 = -300300000 
+
+   ​	node1: 99491799995 + 300300000 - 99791799995 = 300000 
+
+   ​	node2: 508200005 - 208200005 = 300000000 
+
+   **Conclusion: Three UDT payments of 100,000,000 each from nodeA → node1 → node2 were successfully completed. The intermediate node (node1) earned a total fee of 300,000.**
+
       
-   
-9. 关闭这个nodeA和node1的channel
-   
+
+9. Close the channel between nodeA and node1
+
    ```bash
    curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
        "id": 9,
@@ -520,15 +536,10 @@ node2
        ]
    }'
    ```
-   
+
    ```json
    {"jsonrpc":"2.0","result":null,"id":9}
    ```
-   
-   可以在ckb explorer上看到nodeA的地址新增了一笔+96.997RUSD的交易，也就是说在fiber节点上多次转账udt最终会在shutdown_channel关闭channel时在链上结算。
-   
-   
-   
-   
-   
-   
+
+   You can see on the CKB explorer that nodeA’s address received a new transaction of +96.997 RUSD.
+   This indicates that multiple off-chain UDT transfers through Fiber nodes are eventually settled on-chain upon channel closure via the shutdown_channel request.
