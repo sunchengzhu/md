@@ -411,123 +411,123 @@ node2
 
    
 
-   5. 让nodeA付款前先查询一下各channel的local_balance和remote_balance
+5. 让nodeA付款前先查询一下各channel的local_balance和remote_balance
 
-      nodeA ⟺ node1
+   nodeA ⟺ node1
 
-      从前面的步骤3可知`{"local_balance":"0x2540be400","remote_balance":"0x0"}`
+   从前面的步骤3可知`{"local_balance":"0x2540be400","remote_balance":"0x0"}`
       
-      node1 ⟺ node2
+   node1 ⟺ node2
       
-      只看包含funding_udt_type_script的channel
+   只看包含funding_udt_type_script的channel
       
-      ```bash
-      curl -s --location 'http://18.162.235.225:8227' --header 'Content-Type: application/json' --data '{
-          "id": 5,
-          "jsonrpc": "2.0",
-          "method": "list_channels",
-          "params": [
-              {
-                  "peer_id": "QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89"
-              }
-          ]
-      }'
-      ```
-      找出response中funding_udt_type_script不为null的数据
-      ```json
-      {"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}
-      {"local_balance":"0x1748630df7","remote_balance":"0x13da09"}
-      {"local_balance":"0xa38b9d","remote_balance":"0x1747d35c63"}
-      {"local_balance":"0xc505f","remote_balance":"0x17486a97a1"}
-      ```
+   ```bash
+   curl -s --location 'http://18.162.235.225:8227' --header 'Content-Type: application/json' --data '{
+       "id": 5,
+       "jsonrpc": "2.0",
+       "method": "list_channels",
+       "params": [
+           {
+               "peer_id": "QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89"
+           }
+       ]
+   }'
+   ```
+   找出response中funding_udt_type_script不为null的数据
+   ```json
+   {"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}
+   {"local_balance":"0x1748630df7","remote_balance":"0x13da09"}
+   {"local_balance":"0xa38b9d","remote_balance":"0x1747d35c63"}
+   {"local_balance":"0xc505f","remote_balance":"0x17486a97a1"}
+   ```
    
    
    
-   6. 向nodeA发送send_payment，实现nodeA向node2付款。
+6. 向nodeA发送send_payment，实现nodeA向node2付款。
    
-      ```bash
-      curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
-          "id": 6,
-          "jsonrpc": "2.0",
-          "method": "send_payment",
-          "params": [
-              {
-                  "invoice": "fibt1000000001px88ja42xcmczxzat8lhtuq9f29ga8x244qk737nl4r7lq8aw7y7puhjn6jp50xsd2c6ndfxkmn5wnl4z8clk7fej9trwx0gjlmtvnj2wqwlvcu0eekzqvtehlc42t8lpstmgc7ntskh5ef36f8hgvck8c9pescktlx05fpuaceews94kvyrvgf87gvd9wnmh86puzyz2vp6h6jppt8lsq5u8tc87y6szha9587f90dmlmwt5mtetxz9ekukxu6x7s2fyuuy2re0etzzksqnt8rtr5925qypz2224j5xf56nlscnmtvcvywdxg40hsy5w5xt40d5cdest3kvhqswfftfc3qqs7plhlk7m5n9hyzqws9qlxw2huurg7l6c4q9evyg7fljcl3cqh3h3ecpg3fue3cq4slpxapvc2uye6jl77sfcflc8jf8fvr4qwly9wxuyehqf573hu454qy92wqke0hdgrvm7y83sgspn4a29h69s7ucp4cedle"
-              }
-          ]
-      }'
-      ```
+   ```bash
+   curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
+       "id": 6,
+       "jsonrpc": "2.0",
+       "method": "send_payment",
+       "params": [
+           {
+               "invoice": "fibt1000000001px88ja42xcmczxzat8lhtuq9f29ga8x244qk737nl4r7lq8aw7y7puhjn6jp50xsd2c6ndfxkmn5wnl4z8clk7fej9trwx0gjlmtvnj2wqwlvcu0eekzqvtehlc42t8lpstmgc7ntskh5ef36f8hgvck8c9pescktlx05fpuaceews94kvyrvgf87gvd9wnmh86puzyz2vp6h6jppt8lsq5u8tc87y6szha9587f90dmlmwt5mtetxz9ekukxu6x7s2fyuuy2re0etzzksqnt8rtr5925qypz2224j5xf56nlscnmtvcvywdxg40hsy5w5xt40d5cdest3kvhqswfftfc3qqs7plhlk7m5n9hyzqws9qlxw2huurg7l6c4q9evyg7fljcl3cqh3h3ecpg3fue3cq4slpxapvc2uye6jl77sfcflc8jf8fvr4qwly9wxuyehqf573hu454qy92wqke0hdgrvm7y83sgspn4a29h69s7ucp4cedle"
+           }
+       ]
+   }'
+   ```
 
-      ```json
-      {"jsonrpc":"2.0","result":{"payment_hash":"0x9d765b2d4cddf925ea9132acf48916144f12cbdb3208908ca0ca7fa53962f3f7","status":"Created","created_at":"0x195898ec027","last_updated_at":"0x195898ec027","failed_error":null,"fee":"0x186a0"},"id":6}
-      ```
+   ```json
+   {"jsonrpc":"2.0","result":{"payment_hash":"0x9d765b2d4cddf925ea9132acf48916144f12cbdb3208908ca0ca7fa53962f3f7","status":"Created","created_at":"0x195898ec027","last_updated_at":"0x195898ec027","failed_error":null,"fee":"0x186a0"},"id":6}
+   ```
    
       
    
-   7. 重复步骤4和步骤6，再执行两次new_invoice和send_payment，amount仍设置成0x5f5e100。
+7. 重复步骤4和步骤6，再执行两次new_invoice和send_payment，amount仍设置成0x5f5e100。
    
       
    
-   8. 再次查询各channel的local_balance和remote_balance
+8. 再次查询各channel的local_balance和remote_balance
    
-      nodeA ⟺ node1
+   nodeA ⟺ node1
    
-      从`{"local_balance":"0x2540be400","remote_balance":"0x0"}`变为`{"local_balance":"0x24225ad20","remote_balance":"0x11e636e0"}`
+   从`{"local_balance":"0x2540be400","remote_balance":"0x0"}`变为`{"local_balance":"0x24225ad20","remote_balance":"0x11e636e0"}`
    
-      node1 ⟺ node2
+   node1 ⟺ node2
    
-      其余未变，`{"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}`变为`{"local_balance":"0x172a2c63bb","remote_balance":"0x1e4a8445"}`
+   其余未变，`{"local_balance":"0x173c0e06bb","remote_balance":"0xc68e145"}`变为`{"local_balance":"0x172a2c63bb","remote_balance":"0x1e4a8445"}`
    
-      也就是说，付款前后channels的金额完成了下面的变化：
+   也就是说，付款前后channels的金额完成了下面的变化：
    
-      - 付款前
+   - 付款前
    
-        nodeA (10000000000) ⟺ node1 (0)
+     nodeA (10000000000) ⟺ node1 (0)
    
-        node1 (99791799995) ⟺ node2 (208200005)
+     node1 (99791799995) ⟺ node2 (208200005)
    
-      - 付款后
+   - 付款后
    
-        nodeA (9699700000) ⟺ node1 (300300000)
+     nodeA (9699700000) ⟺ node1 (300300000)
    
-        node1 (99491799995) ⟺ node2 (508200005)
+     node1 (99491799995) ⟺ node2 (508200005)
    
-      nodeA资金变化：9699700000 - 10000000000 = -300300000 
+   nodeA资金变化：9699700000 - 10000000000 = -300300000 
    
-      node1资金变化：99491799995 + 300300000 - 99791799995 = 300000 
+   node1资金变化：99491799995 + 300300000 - 99791799995 = 300000 
    
-      node2资金变化：508200005 - 208200005 = 300000000 
+   node2资金变化：508200005 - 208200005 = 300000000 
    
-      **综上可以看出成功完成了nodeA → node1 → node2金额为100000000的3笔udt转账，中间节点node1获得了300000手续费。**
+   **综上可以看出成功完成了nodeA → node1 → node2金额为100000000的3笔udt转账，中间节点node1获得了300000手续费。**
    
       
    
-   9. 关闭这个nodeA和node1的channel
+9. 关闭这个nodeA和node1的channel
    
-      ```bash
-      curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
-          "id": 9,
-          "jsonrpc": "2.0",
-          "method": "shutdown_channel",
-          "params": [
-              {
-                  "channel_id": "0x75dce35923a79086afd0f81b0134ac87619756b6c04a15669ce232aa7db142d8",
-                  "close_script": {
-                      "code_hash": "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
-                      "hash_type": "type",
-                      "args": "0xcc015401df73a3287d8b2b19f0cc23572ac8b14d"
-                  },
-                  "fee_rate": "0x3FC"
-              }
-          ]
-      }'
-      ```
+   ```bash
+   curl -s --location 'http://127.0.0.1:8227' --header 'Content-Type: application/json' --data '{
+       "id": 9,
+       "jsonrpc": "2.0",
+       "method": "shutdown_channel",
+       "params": [
+           {
+               "channel_id": "0x75dce35923a79086afd0f81b0134ac87619756b6c04a15669ce232aa7db142d8",
+               "close_script": {
+                   "code_hash": "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
+                   "hash_type": "type",
+                   "args": "0xcc015401df73a3287d8b2b19f0cc23572ac8b14d"
+               },
+               "fee_rate": "0x3FC"
+           }
+       ]
+   }'
+   ```
    
-      ```json
-      {"jsonrpc":"2.0","result":null,"id":9}
-      ```
+   ```json
+   {"jsonrpc":"2.0","result":null,"id":9}
+   ```
    
-      可以在ckb explorer上看到nodeA的地址新增了一笔+96.997RUSD的交易，也就是说在fiber节点上多次转账udt最终会在shutdown_channel关闭channel时在链上结算。
+   可以在ckb explorer上看到nodeA的地址新增了一笔+96.997RUSD的交易，也就是说在fiber节点上多次转账udt最终会在shutdown_channel关闭channel时在链上结算。
    
    
    
