@@ -1,13 +1,13 @@
 # Testnet Public Nodes User Manual
 
 ## Testnet Public Nodes’ Addresses
-node1
+#### node1
 
 ```bash
 "/ip4/18.162.235.225/tcp/8119/p2p/QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo"
 ```
 
-node2
+#### node2
 
 ```bash
 "/ip4/18.163.221.211/tcp/8119/p2p/QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89"
@@ -287,7 +287,7 @@ node2
    
    ​	node1: 4993500000000 + 19100300000 - 4993800000000 - 18800000000 = 300000  
    
-   ​	node2: 5019100000000 - 5018800000000 =300000000  
+   ​	node2: 5019100000000 - 5018800000000 = 300000000  
    
    **Conclusion: Three CKB payments of 100,000,000 shannon each from nodeA → node1 → node2 were successfully completed. The intermediate node (node1) earned a total fee of 300,000 shannon.**
 
