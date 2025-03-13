@@ -149,19 +149,19 @@
    {"jsonrpc":"2.0","result":{"channels":[{"channel_id":"0x26ce85d57fb4a1a826cbf4862358862317a83b775090625550d8be12c6ce9569","is_public":true,"channel_outpoint":"0x9bb2a8a4bebaf793a235ba2ec87051ae0018b58736b6741df74009ca8101cb8d00000000","peer_id":"QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo","funding_udt_type_script":null,"state":{"state_name":"CHANNEL_READY","state_flags":[]},"local_balance":"0xa32aef600","offered_tlc_balance":"0x0","remote_balance":"0x460913c00","received_tlc_balance":"0x0","latest_commitment_transaction_hash":"0x18ef541a5a195c0ea4715a7783964b3c4be8fba6bd25542e626f91ef1673e3e4","created_at":"0x195892d237f","enabled":true,"tlc_expiry_delta":"0x5265c00","tlc_fee_proportional_millionths":"0x3e8"}]},"id":3
    ```
 
-​	**为什么 local_balance 是 0xa32aef600 (43800000000)，remote_balance 是 0x460913c00 (18800000000)？**
+	**为什么 local_balance 是 0xa32aef600 (43800000000)，remote_balance 是 0x460913c00 (18800000000)？**
 
-​	这个 channel 是由 nodeA 出资 500 CKB 以及 node1 出资 250 CKB 建立的。
+	这个 channel 是由 nodeA 出资 500 CKB 以及 node1 出资 250 CKB 建立的。
 
-​	由于每个 cell 至少需要 62 CKB，因此会预留这部分资金，以确保在链上结算（channel关闭）时有足够的 CKB 支付 cell 占用费用。在链上结算时，这62 CKB 会被返还给各自的节点。
+	由于每个 cell 至少需要 62 CKB，因此会预留这部分资金，以确保在链上结算（channel关闭）时有足够的 CKB 支付 cell 占用费用。在链上结算时，这62 CKB 会被返还给各自的节点。
 
-​	channel实际可用资金：
+	channel实际可用资金：
 
-​	nodeA：500 CKB - 62 CKB = 438 CKB (local_balance为0xa32aef600)
+	nodeA：500 CKB - 62 CKB = 438 CKB (local_balance为0xa32aef600)
 
-​	node1：250 CKB - 62 CKB = 188 CKB (remote_balance为0x460913c00)
-
-​	
+	node1：250 CKB - 62 CKB = 188 CKB (remote_balance为0x460913c00)
+	
+	
 
 4. 调用node2的`new_invoice`接口生成一个invoice
 
