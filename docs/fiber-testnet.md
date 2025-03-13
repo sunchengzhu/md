@@ -151,15 +151,15 @@
 
 	**为什么 local_balance 是 0xa32aef600 (43800000000)，remote_balance 是 0x460913c00 (18800000000)？**
 
-	这个 channel 是由 nodeA 出资 500 CKB 以及 node1 出资 250 CKB 建立的。
+	这个 channel 是由 nodeA 出资 500 ckb 以及 node1 出资 250 ckb 建立的。
 
-	由于每个 cell 至少需要 62 CKB，因此会预留这部分资金，以确保在链上结算（channel关闭）时有足够的 CKB 支付 cell 占用费用。在链上结算时，这62 CKB 会被返还给各自的节点。
+	由于每个 cell 至少需要 62 ckb，因此会预留这部分资金，以确保在链上结算（channel关闭）时有足够的 ckb 支付 cell 占用费用。在链上结算时，这62 ckb 会被返还给各自的节点。
 
 	channel实际可用资金：
 
-	nodeA：500 CKB - 62 CKB = 438 CKB (local_balance为0xa32aef600)
+	nodeA：500 ckb - 62 ckb = 438 ckb (local_balance为0xa32aef600)
 
-	node1：250 CKB - 62 CKB = 188 CKB (remote_balance为0x460913c00)
+	node1：250 ckb - 62 ckb = 188 ckb (remote_balance为0x460913c00)
 	
 	
 

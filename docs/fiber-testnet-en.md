@@ -148,15 +148,15 @@
 
    **Why is the local_balance 0xa32aef600 (43,800,000,000) and the remote_balance 0x460913c00 (18,800,000,000)?**
 
-	This channel was established with nodeA contributing 500 CKB and node1 contributing 250 CKB.
+	This channel was established with nodeA contributing 500 ckb and node1 contributing 250 ckb.
 
-	Since each cell requires a minimum of 62 CKB, this amount is reserved to ensure that there are sufficient funds to cover cell occupancy costs during on-chain settlement (when the channel closes). These 62 CKB will be returned to their respective nodes at the time of on-chain settlement.
+	Since each cell requires a minimum of 62 ckb, this amount is reserved to ensure that there are sufficient funds to cover cell occupancy costs during on-chain settlement (when the channel closes). These 62 ckb will be returned to their respective nodes at the time of on-chain settlement.
 
 	Actual available funds in the channel:
 
-	nodeA: 500 CKB - 62 CKB = 438 CKB (local_balance is 0xa32aef600)
+	nodeA: 500 ckb - 62 ckb = 438 ckb (local_balance is 0xa32aef600)
 
-	node1: 250 CKB - 62 CKB = 188 CKB (remote_balance is 0x460913c00)
+	node1: 250 ckb - 62 ckb = 188 ckb (remote_balance is 0x460913c00)
 
 
 
