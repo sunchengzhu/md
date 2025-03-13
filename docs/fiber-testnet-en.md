@@ -344,7 +344,7 @@
 
    
 
-2.  Establish a channel with 20 RUSD: nodeA (20 RUSD) ⟺ node1 (0)
+2. Establish a channel with 20 RUSD: nodeA (20 RUSD) ⟺ node1 (0)
 
    _Node1 has auto_accept_amount for RUSD set to 20 RUSD, so please input 20 RUSD or more as the funding_amount._
 
