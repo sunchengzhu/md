@@ -260,7 +260,7 @@
    {"jsonrpc":"2.0","result":{"payment_hash":"0xafb604f74c28009732ed4c82983cf1efaddf62ee36442f360fb4a8c79b845432","status":"Created","created_at":"0x1958957cc7d","last_updated_at":"0x1958957cc7d","failed_error":null,"fee":"0x186a0"},"id":6}
    ```
 
-​	
+
 
 7. 重复步骤4和步骤6，再执行两次new_invoice和send_payment，amount仍设置成 0x5f5e100 。
 
