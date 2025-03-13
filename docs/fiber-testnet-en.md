@@ -116,9 +116,10 @@
        ]
    }'
    ```
-      ```json
+   
+   ```json
    {"jsonrpc":"2.0","result":{"temporary_channel_id":"0x30089ec4c8ce1e1d4930220c2bff856eec7ab44550e15b76d62489fd42eaafe8"},"id":2}
-      ```
+   ```
 
 
 
