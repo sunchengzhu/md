@@ -258,7 +258,7 @@
    {"jsonrpc":"2.0","result":{"payment_hash":"0xafb604f74c28009732ed4c82983cf1efaddf62ee36442f360fb4a8c79b845432","status":"Created","created_at":"0x1958957cc7d","last_updated_at":"0x1958957cc7d","failed_error":null,"fee":"0x186a0"},"id":6}
    ```
 
-​	
+
 
 7. Repeat Steps 4 and 6 two more times
 
