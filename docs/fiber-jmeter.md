@@ -10,7 +10,7 @@
 
 ### 问题场景
 
-多了一个C节点和B节点之间的channel，它是向C节点发送open_channel建立出来的，这样性能会有明显损耗。
+多了一个B节点和C节点之间的channel，它是向C节点发送open_channel建立出来的，这样性能会有明显损耗。
 
 ![image-20250428030218317](https://typora-1304641378.cos.ap-shanghai.myqcloud.com/images/image-20250428030218317.png)
 
