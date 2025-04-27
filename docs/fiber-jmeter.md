@@ -48,7 +48,7 @@ cd fiber-stability-test-nodes/local
 
 4. 建立网络连接
 
-   ```
+   ```bash
    bash 4_connect_peer.sh
    ```
 
