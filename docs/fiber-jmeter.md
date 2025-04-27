@@ -35,10 +35,10 @@ cd fiber-stability-test-nodes/local
 
    在脚本后面传入develop或者find参数
 
-   如果2_prepare.sh后面不加参数且能找到`../fiber/target/release/fnn`则会用原来的fnn重新配置节点目录
-
    ```bash
    bash 2_prepare.sh find
+   # 如果2_prepare.sh后面不加参数且能找到`../fiber/target/release/fnn`则会用原来的fnn重新配置节点目录
+   bash 2_prepare.sh
    ```
 
 3. 启动节点
