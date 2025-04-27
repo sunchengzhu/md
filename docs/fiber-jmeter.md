@@ -41,9 +41,9 @@ cd fiber-stability-test-nodes/local
    bash 2_prepare.sh find
    ```
 
-3.  启动节点
+3. 启动节点
 
-   ```bash
+   ```bash 
    bash 3_run.sh
    ```
 
