@@ -56,16 +56,14 @@ cd fiber-stability-test-nodes/local
 
 5. 建立channel
 
-   建立nodeA ⟺ nodeB、nodeB ⟺ nodeC
-
-   传入find参数则会建立nodeA ⟺ nodeB、nodeB ⟺ nodeC、nodeC ⟺ nodeB
+   建立nodeA ⟺ nodeB、nodeB ⟺ nodeC、nodeC ⟺ nodeB
 
    ```bash
    bash 5_open_channel.sh
-   # 复现问题在请在脚本后面传入find参数
-   bash 5_open_channel.sh find
+   # 不需要nodeC ⟺ nodeB请在脚本后面传入debug参数
+   bash 5_open_channel.sh debug
    ```
-
+   
 6. 测试一下
 
    看看A能不能转给C
