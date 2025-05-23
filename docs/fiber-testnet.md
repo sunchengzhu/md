@@ -19,12 +19,14 @@
 
 1. 下载fnn
 
+   这里只是提供了一个具体例子供您参考，请前往[releases](https://github.com/nervosnetwork/fiber/releases)下载并使用最新的fiber版本。
+
    以macOS (Apple silicon)版本为例
 
    ```bash
    mkdir tmp && cd tmp
-   wget https://github.com/nervosnetwork/fiber/releases/download/v0.4.0/fnn_v0.4.0-x86_64-darwin-portable.tar.gz
-   tar xzvf fnn_v0.4.0-x86_64-darwin-portable.tar.gz
+   wget https://github.com/nervosnetwork/fiber/releases/download/v0.5.1/fnn_v0.5.1-x86_64-darwin-portable.tar.gz
+   tar xzvf fnn_v0.5.1-x86_64-darwin-portable.tar.gz
    ```
 
    
@@ -52,9 +54,9 @@
    ```bash
    cp config/testnet/config.yml testnet-fnn/nodeA
    ```
+
    
-   
-   
+
 4. 通过faucet给nodeA节点的地址充值10000ckb和20RUSD。
 
    RUSD的faucet没有办法直接填地址领，所以可以先连接joyid这样的钱包领20RUSD，再通过[joyid钱包页面](https://testnet.joyid.dev)转账给nodeA节点的地址。
@@ -64,14 +66,14 @@
    - RUSD: https://testnet0815.stablepp.xyz/faucet
 
      
-   
+
 5. 启动节点
 
-   ```bash
-   RUST_LOG=info ./fnn -c testnet-fnn/nodeA/config.yml -d testnet-fnn/nodeA > testnet-fnn/nodeA/a.log 2>&1 &
-   ```
-   
+   启动命令中需要设置一个`FIBER_SECRET_KEY_PASSWORD`环境变量，加密您的钱包私钥文件，这里我设置了'123'，您可以设置任意密码。
 
+   ```bash
+   FIBER_SECRET_KEY_PASSWORD='123' RUST_LOG=info ./fnn -c testnet-fnn/nodeA/config.yml -d testnet-fnn/nodeA > testnet-fnn/nodeA/a.log 2>&1 &
+   ```
 
 
 
