@@ -29,6 +29,10 @@
 
 
 - Miner Message (.transactions[0].witnesses)
+
+  - 软分叉前：binary_version ｜ message
+  - 软分叉后：versionbit ｜ binary_version ｜ message
+
 - Epoch (.header.epoch)
 - Epoch Start Number (.header.epoch)
   - block height - index
@@ -54,11 +58,39 @@
 - Cycles是null
 - _Miner应该是空吧_
 
-
+### 区块里面的搜索交易功能
 
 ## Transaction
 
 ### Cellbase
+
+#### Reward Info
+
+Cellbase交易是分配给打包第N-11个区块的矿工的奖励，所以`ckb-cli rpc get_block_economic_state`要查询的都是第N-11个区块。
+
+- Cellbase for Block
+
+  看能不能跳转到第N-11个区块
+
+- Base Reward (.miner_reward.primary)
+
+- Secondary Reward (.miner_reward.secondary)
+
+- Commit Reward (.miner_reward.committed)
+
+- Proposal Reward (.miner_reward.proposal)
+
+- primary + secondary + committed + proposal = .transactions[0].outputs[0].capacity
+
+- 第0个区块 (创世块)
+
+  - 老的浏览器是把第一个交易当成了cellbase交易并做了特殊处理
+
+- 前1-11个区块
+
+  - cellbase应该是空
+
+### 普通Transaction
 
 #### 能通过rpc接口查到的字段
 
@@ -71,31 +103,23 @@
 - Transaction Fee | Fee Rate是0
 - Timestamp用的是block的timestamp
 - Status = 最新区块 - Block Height
-- Cycles是空
+- Cycles (.cycles)
 
-##### Reward Info
+  - cellbase交易是空
 
-Cellbase交易是分配给打包第N-11个区块的矿工的奖励，所以`ckb-cli rpc get_block_economic_state`要查询的都是第N-11个区块。
 
-- Cellbase for Block
-
-  看能不能跳转到第N-11个区块
-
-- Base Reward (.miner_reward.primary)
-
-- Secondary Reward (.miner_reward.secondary)
-- Commit Reward (.miner_reward.committed)
-- Proposal Reward (.miner_reward.proposal)
-- primary + secondary + committed + proposal = .transactions[0].outputs[0].capacity
-- 第0个区块 (创世块)
-  - 老的浏览器是把第一个交易当成了cellbase交易并做了特殊处理
-- 前1-11个区块
-  - cellbase应该是空
-
-### rpc查不到的字段
+#### rpc查不到的字段
 
 - Size
   - 考虑用rust-sdk统计
+
+- Fee Rate
+  - 之前是 fee * KW ÷ weight，我确认一下
+  - cellbase交易是0
+- Transaction Fee
+  - 可以先在交易池里面查fee，然后看浏览器上一不一致
+- Status
+  - Block Height - get_tip_header
 
 ### Parameters和Raw
 
